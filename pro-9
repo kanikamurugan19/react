@@ -1,0 +1,50 @@
+import { useState } from "react";
+
+export default function App() {
+  const [isDark, setIsDark] = useState(false);
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        padding: "40px 20px",
+        fontFamily: "Arial",
+        textAlign: "center",
+        backgroundColor: isDark ? "#0f172a" : "#ffffff",
+        color: isDark ? "#e6eef8" : "#111827",
+        transition: "0.3s",
+      }}
+    >
+      <h1>Theme Toggle Example</h1>
+      <p>Click the button to switch between Light and Dark mode.</p>
+
+      <button
+        onClick={() => setIsDark(!isDark)}
+        style={{
+          padding: "10px 16px",
+          borderRadius: "8px",
+          border: "none",
+          cursor: "pointer",
+          background: isDark ? "#1f2937" : "#f3f4f6",
+          color: isDark ? "#e6eef8" : "#111827",
+          marginBottom: "20px",
+        }}
+      >
+        {isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      </button>
+
+      <div
+        style={{
+          padding: "20px",
+          borderRadius: "10px",
+          border: "1px solid",
+        }}
+      >
+        <h2>Preview Area</h2>
+        <p>
+          This text and the page background change according to the selected theme.
+        </p>
+      </div>
+    </div>
+  );
+}
