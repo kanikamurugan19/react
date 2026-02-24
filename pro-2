@@ -2,17 +2,17 @@ import { useState } from "react";
 export default 
 function App() {
 const [tasks, setTasks] = useState([]);
-const [text, setText] = useState(""); // controlled input
+const [text, setText] = useState("");
 const addTask = (e) => {
 e.preventDefault();
 const trimmed = text.trim();
-if (!trimmed) return; // ignore empty
+if (!trimmed) return;
 const newTask = {
 id: Date.now(),
 text: trimmed,
 completed: false,
 };
-setTasks([newTask, ...tasks]); // add to front
+setTasks([newTask, ...tasks]);
 setText("");
 };
 const deleteTask = (id) => {
