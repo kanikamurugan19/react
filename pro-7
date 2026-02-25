@@ -1,63 +1,38 @@
-import { useState, useEffect } from "react";
-function App() {
-const [users, setUsers] = useState([]);
-useEffect(() => {
-fetch("https://jsonplaceholder.typicode.com/users")
-.then((res) => res.json())
-.then((data) => setUsers(data));
-}, []);
-return (
-<>
-<style>{`
-body {
-background: #e3ecf7;
-font-family: Arial, sans-serif;
-}
-.container {
-text-align: center;
-margin-top: 30px;
-}
-.title {
-font-size: 26px;
-margin-bottom: 20px;
-color: #1f2d3d;
-}
-.user-list {
-width: 350px;
-margin: auto;
-}
-.user {
-padding: 12px 16px;
-margin-bottom: 12px;
-background: #d6e4f5;
-border-radius: 10px;
-text-align: left;
-border-left: 4px solid #4a90e2;
-transition: 0.3s;
-}
-.user:hover {
-background: #c7daf1;
-}
-.user p {
-font-size: 14px;
-margin: 4px 0;
-}
-strong {
-color: #1f2d3d;
-}
-`}</style>
-<div className="container">
-<h1 className="title">User List</h1>
-<div className="user-list">
-{users.map((user) => (
-<div key={user.id} className="user">
-<p><strong>Name:</strong> {user.name}</p>
-<p><strong>Email:</strong> {user.email}</p>
-</div>
-))}
-</div>
-</div>
-</>
+create table library_master(
+accno number primary key,
+title varchar2(25),
+author varchar2(25),
+rate number
 );
-}
-export default App;
+
+create table library_transaction(
+userid number,
+accno number references library_master(accno),
+date_of_issue date,
+date_of_return date
+);
+
+insert into library_master values(1001,'c programming','balaguruswamy',300);
+insert into library_master values(1002,'c++ programming','balaguru',350);
+insert into library_master values(1004,'data structure','michael',400);
+insert into library_master values(1005,'oracle & RDBMS','john peter',320);
+
+select * from library_master;
+
+insert into library_transaction values(1,1002,to_date('12-jun-16','dd-mon-yy'),to_date('13-jul-16','dd-mon-yy'));
+insert into library_transaction values(2,1005,to_date('25-jul-16','dd-mon-yy'),to_date('24-aug-16','dd-mon-yy'));
+insert into library_transaction values(3,1004,to_date('01-jun-16','dd-mon-yy'),to_date('30-jun-16','dd-mon-yy'));
+
+select * from library_transaction;
+
+set linesize 75
+ttitle center 'LIBRARY MANAGEMENT' skip 1
+column accno heading 'ACCOUNT NUMBER'
+column title heading 'BOOK_NAME'
+column date_of_issue heading 'DATE_OF_ISSUE'
+break on row skip 1
+
+select m.accno, m.title, t.date_of_issue
+from library_master m, library_transaction t
+where m.accno=t.accno
+and date_of_return=to_date('24-aug-16','dd-mon-yy');
