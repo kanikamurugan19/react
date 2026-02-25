@@ -1,61 +1,56 @@
-import { useState, useEffect } from "react";
+create table bus(
+routeno number(4) primary key,
+source varchar2(15),
+destination varchar2(15)
+);
 
-function App() {
-  const [greeting, setGreeting] = useState("");
+create table passenger(
+pid number(4) primary key,
+pname varchar2(15),
+dob date,
+gender varchar2(6)
+);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const hour = now.getHours().toString().padStart(2, '0');
-      const min = now.getMinutes().toString().padStart(2, '0');
-      const secs = now.getSeconds().toString().padStart(2, '0');
+create table book_ticket(
+pid number(4) references passenger(pid),
+routeno number(4) references bus(routeno),
+journey_date date,
+seat_no varchar2(5),
+primary key(pid, routeno, journey_date)
+);
 
-      if (hour < 12) {
-        setGreeting(`Good Morning<br/>${hour}:${min}:${secs}`);
-      } else if (hour >= 12 && hour < 17) {
-        setGreeting(`Good Afternoon<br/>${hour}:${min}:${secs}`);
-      } else if (hour >= 17 && hour < 20) {
-        setGreeting(`Good Evening<br/>${hour}:${min}:${secs}`);
-      } else {
-        setGreeting(`Good Night<br/>${hour}:${min}:${secs}`);
-      }
-    }, 1000); // every 1 second update
+insert into bus values(10,'coimbatore','salem');
+insert into bus values(11,'coimbatore','mettupalayam');
+insert into bus values(12,'coimbatore','erode');
 
-    return () => clearInterval(interval); // cleanup
-  }, []);
+commit;
 
-  return (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: "80px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <div
-        style={{
-          display: "inline-block",
-          padding: "20px 40px",
-          borderRadius: "12px",
-          backgroundColor: "#66b5eeff",
-          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-        }}
-      >
-        <h1
-          style={{
-            margin: 0,
-            fontSize: "30px",
-            color: "#0a0202ff",
-          }}
-          dangerouslySetInnerHTML={{ __html: greeting }}
-        ></h1>
+insert into passenger values(101,'kumar','12-sep-78','m');
+insert into passenger values(102,'jaya','12-dec-67','f');
+insert into passenger values(103,'praveen','20-mar-01','m');
 
-        <p style={{ marginTop: "10px", color: "#0e0a0aff" }}>
-          This greeting updates based on your system time.
-        </p>
-      </div>
-    </div>
-  );
-}
+commit;
 
-export default App;
+insert into book_ticket values(101,10,'12-apr-12','s1');
+insert into book_ticket values(102,11,'13-sep-13','s10');
+insert into book_ticket values(102,12,'30-jun-13','s12');
+insert into book_ticket values(102,12,'31-jul-13','s13');
+insert into book_ticket values(102,12,'31-aug-13','s14');
+
+commit;
+
+select * from bus;
+select * from passenger;
+select * from book_ticket;
+
+select constraint_name, constraint_type
+from user_constraints
+where table_name='BUS';
+
+select constraint_name, constraint_type
+from user_constraints
+where table_name='PASSENGER';
+
+select constraint_name, constraint_type, r_constraint_name
+from user_constraints
+where table_name='BOOK_TICKET';
