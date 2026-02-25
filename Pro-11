@@ -1,0 +1,34 @@
+create table student(
+rollno number,
+name varchar2(20),
+totalmarks number,
+result varchar2(4)
+);
+
+insert into student values(1001,'aravind',33,'fail');
+insert into student values(1002,'arun',95,'pass');
+insert into student values(1003,'senthil',25,'fail');
+insert into student values(1004,'tharun',44,'pass');
+insert into student values(1005,'priya',98,'pass');
+
+begin
+execute immediate 'create table student_pass as select * from student where result=''pass''';
+execute immediate 'create table student_fail as select * from student where result=''fail''';
+end;
+/
+
+declare
+cursor cpass is select name from student_pass;
+cursor cfail is select name from student_fail;
+begin
+dbms_output.put_line('list of passed students');
+for p in cpass loop
+dbms_output.put_line(p.name);
+end loop;
+
+dbms_output.put_line('list of failed students');
+for f in cfail loop
+dbms_output.put_line(f.name);
+end loop;
+end;
+/
