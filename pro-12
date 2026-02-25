@@ -1,0 +1,27 @@
+set serveroutput on
+
+create table bank_acc(
+accno varchar2(10) primary key,
+name varchar2(20),
+deposit number
+);
+
+declare
+vaccno varchar2(10) := '&vaccno';
+vname varchar2(20) := '&vname';
+vdeposit number := &vdeposit;
+zerodeposit exception;
+begin
+if vdeposit <= 0 then
+raise zerodeposit;
+else
+insert into bank_acc(accno,name,deposit)
+values(vaccno,vname,vdeposit);
+dbms_output.put_line('record inserted successfully');
+end if;
+
+exception
+when zerodeposit then
+dbms_output.put_line('invalid deposit amount');
+end;
+/
