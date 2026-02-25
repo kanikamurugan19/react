@@ -1,50 +1,28 @@
-import { useState } from "react";
+factorial
 
-export default function App() {
-  const [isDark, setIsDark] = useState(false);
+declare
+n number := &n;
+f number := 1;
+begin
+for i in 1..n loop
+f := f * i;
+end loop;
+dbms_output.put_line('factorial is ' || f);
+end;
+/
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "40px 20px",
-        fontFamily: "Arial",
-        textAlign: "center",
-        backgroundColor: isDark ? "#0f172a" : "#ffffff",
-        color: isDark ? "#e6eef8" : "#111827",
-        transition: "0.3s",
-      }}
-    >
-      <h1>Theme Toggle Example</h1>
-      <p>Click the button to switch between Light and Dark mode.</p>
+sum of digits
 
-      <button
-        onClick={() => setIsDark(!isDark)}
-        style={{
-          padding: "10px 16px",
-          borderRadius: "8px",
-          border: "none",
-          cursor: "pointer",
-          background: isDark ? "#1f2937" : "#f3f4f6",
-          color: isDark ? "#e6eef8" : "#111827",
-          marginBottom: "20px",
-        }}
-      >
-        {isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      </button>
-
-      <div
-        style={{
-          padding: "20px",
-          borderRadius: "10px",
-          border: "1px solid",
-        }}
-      >
-        <h2>Preview Area</h2>
-        <p>
-          This text and the page background change according to the selected theme.
-        </p>
-      </div>
-    </div>
-  );
-}
+declare
+n number := &n;
+s number := 0;
+r number;
+begin
+while n != 0 loop
+r := mod(n,10);
+s := s + r;
+n := trunc(n/10);
+end loop;
+dbms_output.put_line('sum of digits is ' || s);
+end;
+/
