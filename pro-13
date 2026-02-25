@@ -1,0 +1,28 @@
+set serveroutput on
+
+declare
+java number(3) := &java;
+dbms number(3) := &dbms;
+co number(3) := &co;
+mfcs number(3) := &mfcs;
+total number(4);
+per number(6,2);
+begin
+total := java + dbms + co + mfcs;
+per := (total/400)*100;
+
+if java<40 or dbms<40 or co<40 or mfcs<40 then
+dbms_output.put_line('fail');
+elsif per >= 75 then
+dbms_output.put_line('grade a');
+elsif per >= 65 then
+dbms_output.put_line('grade b');
+elsif per >= 55 then
+dbms_output.put_line('grade c');
+else
+dbms_output.put_line('grade d');
+end if;
+
+dbms_output.put_line('percentage is ' || per);
+end;
+/
