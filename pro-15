@@ -1,0 +1,40 @@
+set serveroutput on
+
+create table inventory_master1(
+orderid number primary key,
+custid number,
+orderdate date,
+amount number
+);
+
+create table inventory_trans1(
+orderid number references inventory_master1(orderid),
+productid number,
+productname varchar2(30),
+quantity number,
+unitprice number
+);
+
+create or replace trigger check1
+before insert on inventory_master1
+for each row
+begin
+if :new.amount <= 0 then
+raise_application_error(-20040,'invalid amount');
+end if;
+end;
+/
+
+insert into inventory_master1 values(5001,101,'12-jul-20',2000);
+
+create or replace trigger check2
+before insert on inventory_trans1
+for each row
+begin
+if :new.quantity < 0 then
+raise_application_error(-20041,'invalid quantity');
+end if;
+end;
+/
+
+insert into inventory_trans1 values(5001,88,'television',10,32000);
